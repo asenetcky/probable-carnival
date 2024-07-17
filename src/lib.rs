@@ -12,9 +12,9 @@ pub struct Args {
     // pub count: u8,
 }
 
-pub async fn grab_data(uri: reqwest::Url) -> Result<(), Err> {
+pub async fn grab_data(uri: reqwest::Url) -> Result<(), reqwest::Error> {
     let body = reqwest::get(uri).await?.text().await?;
 
     println!("body = {body:?}");
-    Ok(());
+    Ok(())
 }
