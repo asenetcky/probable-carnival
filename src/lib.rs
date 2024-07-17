@@ -1,4 +1,5 @@
 use clap::Parser;
+use reqwest::{Error, Response};
 
 #[derive(Parser, Debug)]
 #[clap(version, about)]
@@ -9,4 +10,10 @@ pub struct Args {
     // /// Number of times to greet
     // #[clap(short, long, default_value = "1")]
     // pub count: u8,
+}
+
+pub async fn grab_data(uri: reqwest::Url) -> Result<Response, Error> {
+    let body = reqwest::get(uri).await?.text().await?;
+
+    println!("body = {body:?}");
 }

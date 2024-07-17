@@ -1,5 +1,6 @@
 use clap::Parser;
 use odp_app::Args;
+use reqwest::{blocking, Url};
 
 const DOMAIN: &str = "https://data.ct.gov/resource/";
 
@@ -7,8 +8,8 @@ const DOMAIN: &str = "https://data.ct.gov/resource/";
 
 fn main() {
     let args = Args::parse();
-
-    let uri = format!("{}{}", DOMAIN, args.fourbyfour);
-
-    println!("Hello {:#?}!", uri);
+    let uri: reqwest::Url = format!("{}{}.csv", DOMAIN, args.fourbyfour)
+        .parse::<Url>()
+        .expect("Not parseable :C");
+    println!("{uri}");
 }
