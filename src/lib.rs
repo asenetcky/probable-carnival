@@ -1,17 +1,3 @@
-// use clap::Parser;
-// use reqwest::{Error, Response};
-
-// #[derive(Parser, Debug)]
-// #[clap(version, about)]
-// pub struct Args {
-//     /// Name of the person to greet
-//     #[clap(short, long)]
-//     pub fourbyfour: String,
-//     // /// Number of times to greet
-//     // #[clap(short, long, default_value = "1")]
-//     // pub count: u8,
-// }
-
 // pub async fn grab_data(uri: reqwest::Url) -> Result<(), reqwest::Error> {
 //     let body = reqwest::get(uri).await?.text().await?;
 
@@ -24,6 +10,7 @@ RSocrata is an interface to data hosted online in Socrata (now Tyler Technologie
 */
 use clap::Parser;
 use regex::Regex;
+use reqwest::Request;
 
 #[derive(Parser, Debug)]
 #[clap(version, about)]
@@ -52,6 +39,18 @@ pub fn is_four_by_four(fourbyfour: String) -> bool {
 
     true
 }
+
+// async fn get_response(
+//     url: reqwest::Url,
+//     email: Option<String>,
+//     password: Option<String>,
+// ) -> Result<reqwest::Response, reqwest::Error> {
+//     if email == None && password == None {
+//         let response = reqwest::get(url).await?.text().await?;
+//         println!("{response:?}");
+//     }
+//     Ok(());
+// }
 
 #[cfg(test)]
 mod tests {
