@@ -10,7 +10,7 @@ RSocrata is an interface to data hosted online in Socrata (now Tyler Technologie
 */
 use clap::Parser;
 use regex::Regex;
-use reqwest::Request;
+use reqwest::{IntoUrl, Request};
 
 #[derive(Parser, Debug)]
 #[clap(version, about)]
@@ -40,6 +40,18 @@ pub fn is_four_by_four(fourbyfour: String) -> bool {
     true
 }
 
+fn no_deniro(s: &str) -> f64 {
+    let s = s.trim_start_matches('$');
+    s.parse::<f64>().expect("Not parseable to a float")
+}
+
+pub fn ls_socrata(url_string: String) {
+    let parsed_url =
+        reqwest::Url::parse(url_string.as_str()).expect("Does not appear to  be a valid URL.");
+
+    let response = reqwest::get(parsed_url);
+}
+
 // async fn get_response(
 //     url: reqwest::Url,
 //     email: Option<String>,
@@ -55,6 +67,12 @@ pub fn is_four_by_four(fourbyfour: String) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn no_deniro_test() {
+        let s = "$123.45";
+        assert_eq!(no_deniro(s), 123.45);
+    }
 
     #[test]
     fn four_true_is_true() {
